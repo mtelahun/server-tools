@@ -12,8 +12,8 @@ msgstr ""
 "POT-Creation-Date: 2017-06-06 02:51+0000\n"
 "PO-Revision-Date: 2019-09-02 22:23+0000\n"
 "Last-Translator: Rodrigo Macedo <rmsolucoeseminformatic4@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/"
-"23907/pt_BR/)\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/"
+"teams/23907/pt_BR/)\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -37,6 +37,11 @@ msgstr "Grupos Permitidos"
 #: model_terms:ir.ui.view,arch_db:sql_export.sql_export_view_form
 msgid "Allowed Users"
 msgstr "Usuários Permitidos"
+
+#. module: sql_export
+#: selection:sql.export,file_format:0
+msgid "CSV"
+msgstr ""
 
 #. module: sql_export
 #: model_terms:ir.ui.view,arch_db:sql_export.sql_file_wizard_view_form
@@ -66,6 +71,11 @@ msgid "Csv File"
 msgstr "Arquivo Csv"
 
 #. module: sql_export
+#: model:ir.model.fields,field_description:sql_export.date_field_variable_sql
+msgid "Date"
+msgstr ""
+
+#. module: sql_export
 #: model:ir.model.fields,field_description:sql_export.field_sql_export__display_name
 #: model:ir.model.fields,field_description:sql_export.field_sql_file_wizard__display_name
 msgid "Display Name"
@@ -80,6 +90,11 @@ msgstr "Rascunho"
 #: model:ir.model.fields,field_description:sql_export.field_sql_export__encoding
 msgid "Encoding"
 msgstr "Codificação"
+
+#. module: sql_export
+#: selection:sql.export,file_format:0
+msgid "Excel"
+msgstr ""
 
 #. module: sql_export
 #: model_terms:ir.ui.view,arch_db:sql_export.sql_export_view_form
@@ -101,6 +116,11 @@ msgstr "Exportar arquivo"
 #: model:ir.model.fields,field_description:sql_export.field_sql_file_wizard__binary_file
 msgid "File"
 msgstr "Arquivo"
+
+#. module: sql_export
+#: model:ir.model.fields,field_description:sql_export.field_sql_export__file_format
+msgid "File Format"
+msgstr ""
 
 #. module: sql_export
 #: model:ir.model.fields,field_description:sql_export.field_sql_file_wizard__file_name
@@ -143,6 +163,16 @@ msgid "Parameters"
 msgstr "Parâmetros"
 
 #. module: sql_export
+#: model:ir.model.fields,field_description:sql_export.m2m_field_variable_sql
+msgid "Partner Categories"
+msgstr ""
+
+#. module: sql_export
+#: model_terms:ir.ui.view,arch_db:sql_export.sql_export_view_form
+msgid "Preview Results"
+msgstr ""
+
+#. module: sql_export
 #: model:ir.model.fields,field_description:sql_export.field_sql_export__query
 msgid "Query"
 msgstr "Consulta"
@@ -159,7 +189,7 @@ msgid "SQL Export"
 msgstr "Exportar SQL"
 
 #. module: sql_export
-#: model:ir.actions.act_window,name:sql_export.sql_parameter_tree_action
+#: model:ir.actions.act_window,name:sql_export.sql_parameter_action
 #: model_terms:ir.ui.view,arch_db:sql_export.sql_parameter_view_tree
 msgid "SQL Parameter"
 msgstr "Parâmetros SQL"
@@ -292,3 +322,8 @@ msgstr "windows-1251"
 #: selection:sql.export,encoding:0
 msgid "windows-1252"
 msgstr "windows-1252"
+
+#. module: sql_export
+#: model:ir.model.fields,field_description:sql_export.integer_field_variable_sql
+msgid "x_ID"
+msgstr ""

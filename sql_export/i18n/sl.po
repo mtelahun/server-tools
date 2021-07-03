@@ -38,6 +38,11 @@ msgid "Allowed Users"
 msgstr "Dovoljeni uporabniki"
 
 #. module: sql_export
+#: selection:sql.export,file_format:0
+msgid "CSV"
+msgstr ""
+
+#. module: sql_export
 #: model_terms:ir.ui.view,arch_db:sql_export.sql_file_wizard_view_form
 msgid "Cancel"
 msgstr "Preklic"
@@ -65,6 +70,11 @@ msgid "Csv File"
 msgstr "CSV datoteka"
 
 #. module: sql_export
+#: model:ir.model.fields,field_description:sql_export.date_field_variable_sql
+msgid "Date"
+msgstr ""
+
+#. module: sql_export
 #: model:ir.model.fields,field_description:sql_export.field_sql_export__display_name
 #: model:ir.model.fields,field_description:sql_export.field_sql_file_wizard__display_name
 msgid "Display Name"
@@ -78,6 +88,11 @@ msgstr "Osnutek"
 #. module: sql_export
 #: model:ir.model.fields,field_description:sql_export.field_sql_export__encoding
 msgid "Encoding"
+msgstr ""
+
+#. module: sql_export
+#: selection:sql.export,file_format:0
+msgid "Excel"
 msgstr ""
 
 #. module: sql_export
@@ -100,6 +115,11 @@ msgstr "Izvoz datoteke"
 #: model:ir.model.fields,field_description:sql_export.field_sql_file_wizard__binary_file
 msgid "File"
 msgstr "Datoteka"
+
+#. module: sql_export
+#: model:ir.model.fields,field_description:sql_export.field_sql_export__file_format
+msgid "File Format"
+msgstr ""
 
 #. module: sql_export
 #: model:ir.model.fields,field_description:sql_export.field_sql_file_wizard__file_name
@@ -142,6 +162,16 @@ msgid "Parameters"
 msgstr "Parametri"
 
 #. module: sql_export
+#: model:ir.model.fields,field_description:sql_export.m2m_field_variable_sql
+msgid "Partner Categories"
+msgstr ""
+
+#. module: sql_export
+#: model_terms:ir.ui.view,arch_db:sql_export.sql_export_view_form
+msgid "Preview Results"
+msgstr ""
+
+#. module: sql_export
 #: model:ir.model.fields,field_description:sql_export.field_sql_export__query
 msgid "Query"
 msgstr "Poizvedba"
@@ -158,7 +188,7 @@ msgid "SQL Export"
 msgstr "SQL izvoz"
 
 #. module: sql_export
-#: model:ir.actions.act_window,name:sql_export.sql_parameter_tree_action
+#: model:ir.actions.act_window,name:sql_export.sql_parameter_action
 #: model_terms:ir.ui.view,arch_db:sql_export.sql_parameter_view_tree
 msgid "SQL Parameter"
 msgstr "SQL parameter"
@@ -290,6 +320,11 @@ msgstr ""
 #. module: sql_export
 #: selection:sql.export,encoding:0
 msgid "windows-1252"
+msgstr ""
+
+#. module: sql_export
+#: model:ir.model.fields,field_description:sql_export.integer_field_variable_sql
+msgid "x_ID"
 msgstr ""
 
 #~ msgid "Sql export id"

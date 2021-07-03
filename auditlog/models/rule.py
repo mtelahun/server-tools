@@ -1,6 +1,8 @@
 # Copyright 2015 ABF OSIELL <https://osiell.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+import copy
+
 from odoo import models, fields, api, modules, _
 
 FIELDS_BLACKLIST = [
@@ -103,6 +105,10 @@ class AuditlogRule(models.Model):
     action_id = fields.Many2one(
         'ir.actions.act_window', string="Action",
         states={'subscribed': [('readonly', True)]})
+    capture_record = fields.Boolean(
+        "Capture Record",
+        help="Select this if you want to keep track of Unlink Record",
+    )
 
     _sql_constraints = [
         ('model_uniq', 'unique(model_id)',
@@ -202,38 +208,63 @@ class AuditlogRule(models.Model):
         self.unsubscribe()
         return super(AuditlogRule, self).unlink()
 
+    @api.model
+    def get_auditlog_fields(self, model):
+        """
+        Get the list of auditlog fields for a model
+        By default it is all stored fields only, but you can
+        override this.
+        """
+        return list(
+            n
+            for n, f in model._fields.items()
+            if (not f.compute and not f.related) or f.store
+        )
+
     @api.multi
     def _make_create(self):
         """Instanciate a create method that log its calls."""
         self.ensure_one()
         log_type = self.log_type
 
-        @api.model
+        @api.model_create_multi
         @api.returns('self', lambda value: value.id)
-        def create_full(self, vals, **kwargs):
+        def create_full(self, vals_list, **kwargs):
             self = self.with_context(auditlog_disabled=True)
             rule_model = self.env['auditlog.rule']
-            new_record = create_full.origin(self, vals, **kwargs)
-            new_values = dict(
-                (d['id'], d) for d in new_record.sudo()
-                .with_context(prefetch_fields=False).read(list(self._fields)))
+            new_records = create_full.origin(self, vals_list, **kwargs)
+            # Take a snapshot of record values from the cache instead of using
+            # 'read()'. It avoids issues with related/computed fields which
+            # stored in the database only at the end of the transaction, but
+            # their values exist in cache.
+            new_values = {}
+            fields_list = rule_model.get_auditlog_fields(self)
+            for new_record in new_records.sudo():
+                new_values.setdefault(new_record.id, {})
+                for fname, field in new_record._fields.items():
+                    if fname not in fields_list:
+                        continue
+                    new_values[new_record.id][fname] = field.convert_to_read(
+                        new_record[fname], new_record)
             rule_model.sudo().create_logs(
-                self.env.uid, self._name, new_record.ids,
+                self.env.uid, self._name, new_records.ids,
                 'create', None, new_values, {'log_type': log_type})
-            return new_record
+            return new_records
 
-        @api.model
+        @api.model_create_multi
         @api.returns('self', lambda value: value.id)
-        def create_fast(self, vals, **kwargs):
+        def create_fast(self, vals_list, **kwargs):
             self = self.with_context(auditlog_disabled=True)
             rule_model = self.env['auditlog.rule']
-            vals2 = dict(vals)
-            new_record = create_fast.origin(self, vals, **kwargs)
-            new_values = {new_record.id: vals2}
+            vals_list2 = copy.deepcopy(vals_list)
+            new_records = create_fast.origin(self, vals_list, **kwargs)
+            new_values = {}
+            for vals, new_record in zip(vals_list2, new_records):
+                new_values.setdefault(new_record.id, vals)
             rule_model.sudo().create_logs(
-                self.env.uid, self._name, new_record.ids,
+                self.env.uid, self._name, new_records.ids,
                 'create', None, new_values, {'log_type': log_type})
-            return new_record
+            return new_records
 
         return create_full if self.log_type == 'full' else create_fast
 
@@ -277,13 +308,14 @@ class AuditlogRule(models.Model):
         def write_full(self, vals, **kwargs):
             self = self.with_context(auditlog_disabled=True)
             rule_model = self.env['auditlog.rule']
+            fields_list = rule_model.get_auditlog_fields(self)
             old_values = dict(
                 (d['id'], d) for d in self.sudo()
-                .with_context(prefetch_fields=False).read(list(self._fields)))
+                .with_context(prefetch_fields=False).read(fields_list))
             result = write_full.origin(self, vals, **kwargs)
             new_values = dict(
                 (d['id'], d) for d in self.sudo()
-                .with_context(prefetch_fields=False).read(list(self._fields)))
+                .with_context(prefetch_fields=False).read(fields_list))
             rule_model.sudo().create_logs(
                 self.env.uid, self._name, self.ids,
                 'write', old_values, new_values, {'log_type': log_type})
@@ -318,9 +350,10 @@ class AuditlogRule(models.Model):
         def unlink_full(self, **kwargs):
             self = self.with_context(auditlog_disabled=True)
             rule_model = self.env['auditlog.rule']
+            fields_list = rule_model.get_auditlog_fields(self)
             old_values = dict(
                 (d['id'], d) for d in self.sudo()
-                .with_context(prefetch_fields=False).read(list(self._fields)))
+                .with_context(prefetch_fields=False).read(fields_list))
             rule_model.sudo().create_logs(
                 self.env.uid, self._name, self.ids, 'unlink', old_values, None,
                 {'log_type': log_type})
@@ -353,6 +386,9 @@ class AuditlogRule(models.Model):
         for res_id in res_ids:
             model_model = self.env[res_model]
             name = model_model.browse(res_id).name_get()
+            model_id = self.pool._auditlog_model_cache[res_model]
+            auditlog_rule = self.env['auditlog.rule'].search(
+                [("model_id", "=", model_id)])
             res_name = name and name[0] and name[0][1]
             vals = {
                 'name': res_name,
@@ -378,6 +414,11 @@ class AuditlogRule(models.Model):
             elif method is 'write':
                 self._create_log_line_on_write(
                     log, diff.changed(), old_values, new_values)
+            elif method is 'unlink' and auditlog_rule.capture_record:
+                self._create_log_line_on_read(
+                    log,
+                    list(old_values.get(res_id, EMPTY_DICT).keys()), old_values
+                )
 
     def _get_field(self, model, field_name):
         cache = self.pool._auditlog_field_cache

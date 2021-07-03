@@ -5,12 +5,15 @@
 
 import re
 import uuid
+import logging
 from io import BytesIO
 import base64
 from psycopg2 import ProgrammingError
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
+
+logger = logging.getLogger(__name__)
 
 
 class SQLRequestMixin(models.AbstractModel):
@@ -91,6 +94,7 @@ class SQLRequestMixin(models.AbstractModel):
             if item._check_execution_enabled:
                 item._check_execution()
             item.state = 'sql_valid'
+        return True
 
     @api.multi
     def button_set_draft(self):
@@ -100,7 +104,8 @@ class SQLRequestMixin(models.AbstractModel):
     @api.multi
     def _execute_sql_request(
             self, params=None, mode='fetchall', rollback=True,
-            view_name=False, copy_options="CSV HEADER DELIMITER ';'"):
+            view_name=False, copy_options="CSV HEADER DELIMITER ';'",
+            header=False):
         """Execute a SQL request on the current database.
 
         ??? This function checks before if the user has the
@@ -126,6 +131,9 @@ class SQLRequestMixin(models.AbstractModel):
         :param copy_options: (str) mentions extra options for
             "COPY request STDOUT WITH xxx" request.
             (Ignored if @mode != 'stdout')
+        :param header: (boolean) if true, the header of the query will be
+            returned as first element of the list if the mode is fetchall.
+            (Ignored if @mode != fetchall)
 
         ..note:: The following exceptions could be raised:
             psycopg2.ProgrammingError: Error in the SQL Request.
@@ -144,12 +152,7 @@ class SQLRequestMixin(models.AbstractModel):
         if mode in ('view', 'materialized_view'):
             rollback = False
 
-        # pylint: disable=sql-injection
-        if params:
-            query = self.query % params
-        else:
-            query = self.query
-        query = query
+        query = self.env.cr.mogrify(self.query, params).decode('utf-8')
 
         if mode in ('fetchone', 'fetchall'):
             pass
@@ -175,6 +178,11 @@ class SQLRequestMixin(models.AbstractModel):
                 self.env.cr.execute(query)
                 if mode == 'fetchall':
                     res = self.env.cr.fetchall()
+                    if header:
+                        colnames = [
+                            desc[0] for desc in self.env.cr.description
+                        ]
+                        res.insert(0, colnames)
                 elif mode == 'fetchone':
                     res = self.env.cr.fetchone()
         finally:
@@ -242,6 +250,7 @@ class SQLRequestMixin(models.AbstractModel):
             self.env.cr.execute(query)
             res = self._hook_executed_request()
         except ProgrammingError as e:
+            logger.exception("Failed query: %s", query)
             raise UserError(
                 _("The SQL query is not valid:\n\n %s") % e)
         finally:
@@ -261,3 +270,9 @@ class SQLRequestMixin(models.AbstractModel):
         """
         self.ensure_one()
         return False
+
+    @api.multi
+    def button_preview_sql_expression(self):
+        self.button_validate_sql_expression()
+        res = self._execute_sql_request()
+        raise UserError('\n'.join(map(lambda x: str(x), res[:100])))

@@ -1,6 +1,6 @@
-raven
+sentry-sdk
 openpyxl
 xlrd
 xlwt
 pysftp
-pygount
+pygount>1.2.1

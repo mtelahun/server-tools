@@ -255,7 +255,6 @@ msgstr "Model"
 #. module: database_cleanup
 #: model:ir.model,name:database_cleanup.model_ir_model_data
 #, fuzzy
-#| msgid "Model"
 msgid "Model Data"
 msgstr "Model"
 
@@ -294,7 +293,7 @@ msgid "No dangling menu entries found"
 msgstr "Nebyly nalezeny žádné položky s náznaky"
 
 #. module: database_cleanup
-#: code:addons/database_cleanup/models/purge_modules.py:83
+#: code:addons/database_cleanup/models/purge_modules.py:95
 #, python-format
 msgid "No modules found to purge"
 msgstr "Žádná moduly nebyla odstraněna"
@@ -312,7 +311,7 @@ msgid "No orphaned data entries found"
 msgstr "Nebyly nalezeny žádné záznamy o osiřelých datech"
 
 #. module: database_cleanup
-#: code:addons/database_cleanup/models/purge_models.py:113
+#: code:addons/database_cleanup/models/purge_models.py:120
 #, python-format
 msgid "No orphaned models found"
 msgstr "Nebyly nalezeny žádné osiřelé modely"
@@ -353,14 +352,12 @@ msgstr "Očistit"
 #. module: database_cleanup
 #: model:ir.model,name:database_cleanup.model_cleanup_purge_line
 #, fuzzy
-#| msgid "Purge Wizard"
 msgid "Purge Column Abstract Wizard"
 msgstr "Čistící průvodce"
 
 #. module: database_cleanup
 #: model:ir.model,name:database_cleanup.model_cleanup_purge_line_column
 #, fuzzy
-#| msgid "Purge Wizard"
 msgid "Purge Column Wizard Lines"
 msgstr "Čistící průvodce"
 
@@ -478,7 +475,6 @@ msgstr "Vyčištění tabulek"
 #. module: database_cleanup
 #: model:ir.model,name:database_cleanup.model_cleanup_purge_line_table
 #, fuzzy
-#| msgid "Purge tables"
 msgid "Purge tables wizard lines"
 msgstr "Vyčištění tabulek"
 

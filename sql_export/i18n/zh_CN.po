@@ -39,6 +39,11 @@ msgid "Allowed Users"
 msgstr "允许的用户"
 
 #. module: sql_export
+#: selection:sql.export,file_format:0
+msgid "CSV"
+msgstr ""
+
+#. module: sql_export
 #: model_terms:ir.ui.view,arch_db:sql_export.sql_file_wizard_view_form
 msgid "Cancel"
 msgstr "取消"
@@ -66,6 +71,11 @@ msgid "Csv File"
 msgstr "Csv文件"
 
 #. module: sql_export
+#: model:ir.model.fields,field_description:sql_export.date_field_variable_sql
+msgid "Date"
+msgstr ""
+
+#. module: sql_export
 #: model:ir.model.fields,field_description:sql_export.field_sql_export__display_name
 #: model:ir.model.fields,field_description:sql_export.field_sql_file_wizard__display_name
 msgid "Display Name"
@@ -80,6 +90,11 @@ msgstr "草稿"
 #: model:ir.model.fields,field_description:sql_export.field_sql_export__encoding
 msgid "Encoding"
 msgstr "编码"
+
+#. module: sql_export
+#: selection:sql.export,file_format:0
+msgid "Excel"
+msgstr ""
 
 #. module: sql_export
 #: model_terms:ir.ui.view,arch_db:sql_export.sql_export_view_form
@@ -101,6 +116,11 @@ msgstr "导出文件"
 #: model:ir.model.fields,field_description:sql_export.field_sql_file_wizard__binary_file
 msgid "File"
 msgstr "文件"
+
+#. module: sql_export
+#: model:ir.model.fields,field_description:sql_export.field_sql_export__file_format
+msgid "File Format"
+msgstr ""
 
 #. module: sql_export
 #: model:ir.model.fields,field_description:sql_export.field_sql_file_wizard__file_name
@@ -143,6 +163,16 @@ msgid "Parameters"
 msgstr "参数"
 
 #. module: sql_export
+#: model:ir.model.fields,field_description:sql_export.m2m_field_variable_sql
+msgid "Partner Categories"
+msgstr ""
+
+#. module: sql_export
+#: model_terms:ir.ui.view,arch_db:sql_export.sql_export_view_form
+msgid "Preview Results"
+msgstr ""
+
+#. module: sql_export
 #: model:ir.model.fields,field_description:sql_export.field_sql_export__query
 msgid "Query"
 msgstr "查询"
@@ -159,7 +189,7 @@ msgid "SQL Export"
 msgstr "SQL导出"
 
 #. module: sql_export
-#: model:ir.actions.act_window,name:sql_export.sql_parameter_tree_action
+#: model:ir.actions.act_window,name:sql_export.sql_parameter_action
 #: model_terms:ir.ui.view,arch_db:sql_export.sql_parameter_view_tree
 msgid "SQL Parameter"
 msgstr "SQL参数"
@@ -224,7 +254,9 @@ msgstr "验证SQL表达式"
 msgid ""
 "You can't use the following words: DELETE, DROP, CREATE, INSERT, ALTER, "
 "TRUNCATE, EXECUTE, UPDATE."
-msgstr "您不能使用以下单词：DELETE，DROP，CREATE，INSERT，ALTER，TRUNCATE，EXECUTE，UPDATE。"
+msgstr ""
+"您不能使用以下单词：DELETE，DROP，CREATE，INSERT，ALTER，TRUNCATE，EXECUTE，"
+"UPDATE。"
 
 #. module: sql_export
 #: selection:sql.export,encoding:0
@@ -290,3 +322,8 @@ msgstr "windows-1251"
 #: selection:sql.export,encoding:0
 msgid "windows-1252"
 msgstr "windows-1252"
+
+#. module: sql_export
+#: model:ir.model.fields,field_description:sql_export.integer_field_variable_sql
+msgid "x_ID"
+msgstr ""

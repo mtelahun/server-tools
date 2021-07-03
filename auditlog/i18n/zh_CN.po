@@ -69,6 +69,11 @@ msgid "Auto-vacuum audit logs"
 msgstr "自动清空审核日志"
 
 #. module: auditlog
+#: model:ir.model.fields,field_description:auditlog.field_auditlog_rule__capture_record
+msgid "Capture Record"
+msgstr ""
+
+#. module: auditlog
 #: model:ir.model.fields,field_description:auditlog.field_auditlog_http_request__user_context
 msgid "Context"
 msgstr "上下文"
@@ -148,7 +153,8 @@ msgid ""
 "Fast log: only log the changes made through the create and write operations "
 "(less information, but it is faster)"
 msgstr ""
-"完整日志：在操作之前和之后的数据之间做一个差异（记录更多信息，如更新的计算字段，但速度较慢）\n"
+"完整日志：在操作之前和之后的数据之间做一个差异（记录更多信息，如更新的计算字"
+"段，但速度较慢）\n"
 "快速日志：仅记录通过创建和写入操作所做的更改（信息越少，但速度越快）"
 
 #. module: auditlog
@@ -343,6 +349,11 @@ msgid "Select model for which you want to generate log."
 msgstr "选择要为其生成日志的模型。"
 
 #. module: auditlog
+#: model:ir.model.fields,help:auditlog.field_auditlog_rule__capture_record
+msgid "Select this if you want to keep track of Unlink Record"
+msgstr ""
+
+#. module: auditlog
 #: model:ir.model.fields,help:auditlog.field_auditlog_rule__log_create
 msgid ""
 "Select this if you want to keep track of creation on any record of the model "
@@ -459,7 +470,7 @@ msgid "Values"
 msgstr "值"
 
 #. module: auditlog
-#: code:addons/auditlog/models/rule.py:527
+#: code:addons/auditlog/models/rule.py:568
 #, python-format
 msgid "View logs"
 msgstr "查看日志"

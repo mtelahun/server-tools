@@ -255,7 +255,6 @@ msgstr "Modelo"
 #. module: database_cleanup
 #: model:ir.model,name:database_cleanup.model_ir_model_data
 #, fuzzy
-#| msgid "Model"
 msgid "Model Data"
 msgstr "Modelo"
 
@@ -294,7 +293,7 @@ msgid "No dangling menu entries found"
 msgstr "No se han encontrado entradas de menú colgantes"
 
 #. module: database_cleanup
-#: code:addons/database_cleanup/models/purge_modules.py:83
+#: code:addons/database_cleanup/models/purge_modules.py:95
 #, python-format
 msgid "No modules found to purge"
 msgstr "No se han encontrado módulos a limpiar"
@@ -312,7 +311,7 @@ msgid "No orphaned data entries found"
 msgstr "No se han encontrado entradas de datos huérfanos"
 
 #. module: database_cleanup
-#: code:addons/database_cleanup/models/purge_models.py:113
+#: code:addons/database_cleanup/models/purge_models.py:120
 #, python-format
 msgid "No orphaned models found"
 msgstr "No se han encontrado modelos huérfanos"
@@ -353,14 +352,12 @@ msgstr "Limpiar"
 #. module: database_cleanup
 #: model:ir.model,name:database_cleanup.model_cleanup_purge_line
 #, fuzzy
-#| msgid "Purge Wizard"
 msgid "Purge Column Abstract Wizard"
 msgstr "Asistente de limpiado"
 
 #. module: database_cleanup
 #: model:ir.model,name:database_cleanup.model_cleanup_purge_line_column
 #, fuzzy
-#| msgid "Purge Wizard"
 msgid "Purge Column Wizard Lines"
 msgstr "Asistente de limpiado"
 
@@ -478,7 +475,6 @@ msgstr "Limpiar tablas"
 #. module: database_cleanup
 #: model:ir.model,name:database_cleanup.model_cleanup_purge_line_table
 #, fuzzy
-#| msgid "Purge tables"
 msgid "Purge tables wizard lines"
 msgstr "Limpiar tablas"
 
