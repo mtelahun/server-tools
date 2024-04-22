@@ -2,7 +2,7 @@
 acme
 astor
 contextvars; python_version < '3.7'
-cryptography<23.2.0
+cryptography<42.1.0
 dataclasses
 dnspython
 josepy
